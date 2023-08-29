@@ -22,13 +22,13 @@ main()
 
   xcb_screen_t *screen = iter.data;
 
-  xcb_gcontext_t g = xcb_generate_id (connection);
-  xcb_window_t window = screen->root;
-  uint32_t mask = XCB_GC_FOREGROUND | XCB_GC_GRAPHICS_EXPOSURES;
-  uint32_t values[2];
-  values[0] = screen->black_pixel;
-  values[1] = 0;
-  xcb_create_gc(screen, g, window, mask, values);
+  xcb_window_t windowId = xcb_generate_id (connection);
+  uint32_t propName = XCB_CW_BACK_PIXEL;
+  uint32_t propValue = screen->white_pixel;
+
+  xcb_map_window (connection, windowId);
+  xcb_flush (connection);
+
 
   printf ("\n");
   printf ("Screen Information: %"PRIu32": \n", screen->root);
